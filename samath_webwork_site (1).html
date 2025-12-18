@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samath Webwork Solution - Affordable Website Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(102, 126, 234, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        header.scrolled {
+            background: rgba(102, 126, 234, 1);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideInLeft 0.8s;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            animation: rotate 3s infinite;
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 180px 2rem 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s 0.2s backwards;
+        }
+
+        .hero-image {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            animation: fadeInUp 1s 0.4s backwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+            animation: floatImage 3s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: fadeInUp 1s 0.4s backwards;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+
+        section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 2rem;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            animation: fadeInUp 1s;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s 0.2s backwards;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s backwards;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .services {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s backwards;
+        }
+
+        .service-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
+            transition: all 0.4s;
+        }
+
+        .service-item:hover::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        .service-item:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transform: translateX(10px);
+            border-left-width: 8px;
+        }
+
+        .service-item h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .pricing {
+            text-align: center;
+            background: white;
+        }
+
+        .price-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .price-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s;
+            position: relative;
+            animation: fadeInUp 1s backwards;
+        }
+
+        .price-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .price-card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+            border: 3px solid #764ba2;
+        }
+
+        .price-card.featured:hover {
+            transform: scale(1.13);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #ffc107;
+            color: #333;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1.5rem 0;
+        }
+
+        .featured .price {
+            color: white;
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .price-features li:hover {
+            padding-left: 10px;
+        }
+
+        .featured .price-features li {
+            border-bottom-color: rgba(255,255,255,0.3);
+        }
+
+        .price-features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .featured .price-features li:before {
+            color: #ffc107;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact h2 {
+            color: white;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            font-size: 1.3rem;
+            padding: 1.5rem 2rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            transition: all 0.3s;
+            animation: fadeInUp 1s backwards;
+        }
+
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollBounce 2s infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator::before {
+            content: '⌄';
+            font-size: 3rem;
+            color: white;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 968px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(102, 126, 234, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                gap: 0;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            section {
+                padding: 60px 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🚀</span>
+                <span>Samath Webwork Solution</span>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Premium Websites at Affordable Prices</h1>
+            <p>High-quality website development solutions that won't break the bank</p>
+            <a href="#contact" class="cta-button">Get Started Today</a>
+            <div class="hero-image">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23f8f9fa' width='800' height='600'/%3E%3Cg opacity='0.8'%3E%3Crect x='100' y='100' width='600' height='400' rx='20' fill='white' stroke='%23667eea' stroke-width='4'/%3E%3Crect x='100' y='100' width='600' height='60' rx='20' fill='%23667eea'/%3E%3Ccircle cx='140' cy='130' r='10' fill='white'/%3E%3Ccircle cx='170' cy='130' r='10' fill='white'/%3E%3Ccircle cx='200' cy='130' r='10' fill='white'/%3E%3Crect x='150' y='200' width='200' height='30' rx='5' fill='%23e9ecef'/%3E%3Crect x='150' y='250' width='500' height='15' rx='5' fill='%23e9ecef'/%3E%3Crect x='150' y='280' width='500' height='15' rx='5' fill='%23e9ecef'/%3E%3Crect x='150' y='310' width='400' height='15' rx='5' fill='%23e9ecef'/%3E%3Crect x='150' y='360' width='180' height='100' rx='10' fill='%23667eea' opacity='0.2'/%3E%3Crect x='360' y='360' width='180' height='100' rx='10' fill='%23764ba2' opacity='0.2'/%3E%3C/g%3E%3C/svg%3E" alt="Website Development">
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section id="features">
+        <h2>Why Choose Us?</h2>
+        <p class="section-subtitle">We deliver excellence without the premium price tag</p>
+        <div class="features">
+            <div class="feature-card" style="animation-delay: 0s">
+                <div class="feature-icon">💰</div>
+                <h3>Affordable Pricing</h3>
+                <p>Get professional websites at rates that fit your budget without compromising on quality.</p>
+            </div>
+            <div class="feature-card" style="animation-delay: 0.1s">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Delivery</h3>
+                <p>Quick turnaround times to get your business online and running in no time.</p>
+            </div>
+            <div class="feature-card" style="animation-delay: 0.2s">
+                <div class="feature-icon">🎨</div>
+                <h3>Modern Design</h3>
+                <p>Beautiful, responsive designs that look great on all devices and screen sizes.</p>
+            </div>
+            <div class="feature-card" style="animation-delay: 0.3s">
+                <div class="feature-icon">🛠️</div>
+                <h3>Custom Solutions</h3>
+                <p>Tailored websites built specifically for your business needs and goals.</p>
+            </div>
+            <div class="feature-card" style="animation-delay: 0.4s">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Friendly</h3>
+                <p>All our websites are fully responsive and optimized for mobile devices.</p>
+            </div>
+            <div class="feature-card" style="animation-delay: 0.5s">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Reliable</h3>
+                <p>Built with security best practices to keep your website safe and protected.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <p class="section-subtitle">Complete web solutions tailored to your needs</p>
+        <div class="service-grid">
+            <div class="service-item" style="animation-delay: 0s">
+                <h3>🌐 Website Development</h3>
+                <p>Custom websites built from scratch using the latest technologies.</p>
+            </div>
+            <div class="service-item" style="animation-delay: 0.1s">
+                <h3>🛒 E-commerce Solutions</h3>
+                <p>Full-featured online stores to sell your products worldwide.</p>
+            </div>
+            <div class="service-item" style="animation-delay: 0.2s">
+                <h3>📝 Content Management</h3>
+                <p>Easy-to-use CMS platforms for managing your website content.</p>
+            </div>
+            <div class="service-item" style="animation-delay: 0.3s">
+                <h3>🎯 SEO Optimization</h3>
+                <p>Get found on Google with our SEO-optimized websites.</p>
+            </div>
+            <div class="service-item" style="animation-delay: 0.4s">
+                <h3>🔧 Website Maintenance</h3>
+                <p>Ongoing support and updates to keep your site running smoothly.</p>
+            </div>
+            <div class="service-item" style="animation-delay: 0.5s">
+                <h3>💻 Web Applications</h3>
+                <p>Custom web applications tailored to your business processes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <h2>Affordable Pricing Plans</h2>
+        <p class="section-subtitle">Choose the perfect plan for your business</p>
+        <div class="price-cards">
+            <div class="price-card" style="animation-delay: 0s">
+                <h3>Basic</h3>
+                <div class="price">₹15K</div>
+                <ul class="price-features">
+                    <li>5 Page Website</li>
+                    <li>Responsive Design</li>
+                    <li>Basic SEO</li>
+                    <li>Contact Form</li>
+                    <li>Social Media Links</li>
+                    <li>1 Month Support</li>
+                </ul>
+                <a href="#contact" class="cta-button">Choose Plan</a>
+            </div>
+            <div class="price-card featured" style="animation-delay: 0.1s">
+                <div class="popular-badge">POPULAR</div>
+                <h3>Professional</h3>
+                <div class="price">₹30K</div>
+                <ul class="price-features">
+                    <li>10 Page Website</li>
+                    <li>Premium Design</li>
+                    <li>Advanced SEO</li>
+                    <li>CMS Integration</li>
+                    <li>E-commerce Ready</li>
+                    <li>3 Months Support</li>
+                    <li>Free Logo Design</li>
+                </ul>
+                <a href="#contact" class="cta-button">Choose Plan</a>
+            </div>
+            <div class="price-card" style="animation-delay: 0.2s">
+                <h3>Enterprise</h3>
+                <div class="price">₹50K+</div>
+                <ul class="price-features">
+                    <li>Unlimited Pages</li>
+                    <li>Custom Features</li>
+                    <li>Premium SEO</li>
+                    <li>Web Application</li>
+                    <li>API Integration</li>
+                    <li>6 Months Support</li>
+                    <li>Priority Support</li>
+                </ul>
+                <a href="#contact" class="cta-button">Choose Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2>Get In Touch</h2>
+            <p>Ready to start your project? Contact us today for a free consultation!</p>
+            <div class="contact-info">
+                <div class="contact-item" style="animation-delay: 0s">📧 harsh200214@gmail.com</div>
+                <div class="contact-item" style="animation-delay: 0.1s">📱 +91 7007102060</div>
+                <div class="contact-item" style="animation-delay: 0.2s">📍 Sultanpur, Uttar Pradesh</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Samath Webwork Solution. All rights reserved.</p>
+        <p>Quality Web Development at Affordable Prices</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .service-item, .price-card, .contact-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
